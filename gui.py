@@ -4,8 +4,12 @@ import game
 
 def main():
     window = tk.Tk()
+    window.title("8-Puzzle Solver")
+    iconImage = tk.PhotoImage(file="ai.png")
+    window.iconphoto(True, iconImage)
     grid = game.createGrid(3)
-    game.randomizeGrid(grid)
+    # game.randomizeGrid(grid)
+    game.shuffle(grid, 1000)
     game.printGrid(grid)
     buttons = {}
     target = [[1, 2, 3], [4, 5, 6], [7, 8, " "]]

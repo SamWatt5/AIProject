@@ -37,6 +37,12 @@ def randomizeGrid(grid):
             counter += 1
 
 
+def shuffle(grid, numShuffles):
+    for i in range(numShuffles):
+        turn(grid, random.randint(0, len(grid)-1),
+             random.randint(0, len(grid)-1))
+
+
 def printGrid(grid):
     for row in grid:
         print(" ".join(f"{tile}" for tile in row))
@@ -60,16 +66,20 @@ def turn(grid, x, y):
     # up x y-1
     if check(grid, x, y-1):
         grid[y][x], grid[y-1][x] = grid[y-1][x], grid[y][x]
+        # printGrid(grid)
     # down x y+1
     elif check(grid, x, y+1):
         grid[y][x], grid[y+1][x] = grid[y+1][x], grid[y][x]
+        # printGrid(grid)
     # left x-1 y
     elif check(grid, x-1, y):
         # do something
         grid[y][x], grid[y][x-1] = grid[y][x-1], grid[y][x]
+        # printGrid(grid)
     # right x+1 y
     elif check(grid, x+1, y):
         grid[y][x], grid[y][x+1] = grid[y][x+1], grid[y][x]
+        # printGrid(grid)
         # do something
     else:
         print("cant move")
