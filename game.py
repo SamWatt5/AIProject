@@ -55,24 +55,29 @@ def check(grid, x, y):
 
 
 def turn(grid, x, y):
-    print(grid[y][x])
+    # print(grid[y][x])
 
     # up x y-1
     if check(grid, x, y-1):
-        print("up")
+        grid[y][x], grid[y-1][x] = grid[y-1][x], grid[y][x]
     # down x y+1
     elif check(grid, x, y+1):
-        print("down")
+        grid[y][x], grid[y+1][x] = grid[y+1][x], grid[y][x]
     # left x-1 y
     elif check(grid, x-1, y):
         # do something
-        print("left")
+        grid[y][x], grid[y][x-1] = grid[y][x-1], grid[y][x]
     # right x+1 y
     elif check(grid, x+1, y):
-        print("right")
+        grid[y][x], grid[y][x+1] = grid[y][x+1], grid[y][x]
         # do something
     else:
         print("cant move")
 
 
-main()
+def check_solved(grid, target):
+    for i in range(len(grid)):
+        for j in range(len(grid)):
+            if grid[i][j] != target[i][j]:
+                return False
+    return True
