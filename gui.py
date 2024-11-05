@@ -4,7 +4,9 @@ import game
 
 def main():
     window = tk.Tk()
+    window.geometry("600x400")
     window.title("8-Puzzle Solver")
+    window.configure(bg="#6096BA")
 
     grid = game.createGrid(3)
 
@@ -12,6 +14,11 @@ def main():
     game.printGrid(grid)
 
     target = [[1, 2, 3], [4, 5, 6], [7, 8, " "]]
+    titleLabel = tk.Label(text="8-Puzzle Solver", font=("ariel", "20"))
+
+    buttonFrame = tk.Frame(window)
+    titleLabel.grid(row=0, column=0)
+    buttonFrame.grid(padx=10, pady=10, row=0, column=1)
 
     buttons = {}
     for i in range(len(grid)):
@@ -20,8 +27,14 @@ def main():
                 text=grid[i][j],
                 width=10,
                 height=5,
-                command=lambda x=j, y=i: button_click(grid, buttons, x, y, target))
-            button.grid(row=i, column=j, padx=5, pady=5)
+                command=lambda x=j, y=i: button_click(
+                    grid, buttons, x, y, target),
+                bg="#274c77",
+                fg="#e7ecef",
+                font=("ariel", "12", "bold")
+            )
+            # button.wm_attributes('-transparentcolor', '#ab23ff')
+            button.grid(row=i, column=j, padx=1, pady=1)
             buttons[(i, j)] = button
 
     window.mainloop()

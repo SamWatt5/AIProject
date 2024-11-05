@@ -81,8 +81,8 @@ def turn(grid, x, y):
         grid[y][x], grid[y][x+1] = grid[y][x+1], grid[y][x]
         # printGrid(grid)
         # do something
-    else:
-        print("cant move")
+    # else:
+        # print("cant move")
 
 
 def check_solved(grid, target):
