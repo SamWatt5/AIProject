@@ -51,11 +51,17 @@ def createButtons(frame, grid, target):
 
 
 def button_click(grid, buttons, x, y, target):
+    if game.check_solved(grid, target):
+        return
+
     game.turn(grid, x, y)
     update_buttons(grid, buttons)
     game.printGrid(grid)
+
     if game.check_solved(grid, target):
-        print("SOLVED! :D")
+        solvedText = tk.Label(text="SOLVED :D",
+        font=("ariel", "20"), bg="#6096ba", fg="#e7ecef")
+        solvedText.pack(side=tk.BOTTOM, fill=tk.X)
 
 
 def update_buttons(grid, buttons):
