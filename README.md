@@ -1,6 +1,10 @@
-# 8-Puzzle AIProject
+# 8-Puzzle AI Project
 
 This project aims to create an AI-based solver for the classic 8-puzzle, where an initial configuration of numbered tiles is rearranged to match a target goal state using a minimal number of moves. We will implement and compare several search strategies—Breadth-First Search (BFS), Depth-First Search (DFS), and other tree/graph search methods—to assess their performance in solving the puzzle efficiently. 
+
+# The Problem 
+
+The 8-puzzle is a grid-based sliding puzzle that consists of a 3x3 grid with 8 numbered tiles and one empty space. The objective is to reach a goal configuration by moving tiles into the empty space, which allows only adjacent moves. In AI terms, this problem involves navigating a large state space, making it a suitable candidate for evaluating search-based problem-solving approaches, specifically BFS, DFS, and optimal tree/graph search strategies. 
 
 # Assignment Brief
 
