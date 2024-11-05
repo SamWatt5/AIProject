@@ -5,21 +5,25 @@ import game
 def main():
     window = tk.Tk()
     window.title("8-Puzzle Solver")
-    # window.iconphoto(True, tk.PhotoImage(file="ai.png"))
+
     grid = game.createGrid(3)
-    # game.randomizeGrid(grid)
+
     game.shuffle(grid, 1000)
     game.printGrid(grid)
-    buttons = {}
+
     target = [[1, 2, 3], [4, 5, 6], [7, 8, " "]]
 
+    buttons = {}
     for i in range(len(grid)):
         for j in range(len(grid)):
             button = tk.Button(
-                text=grid[i][j], width=10, height=5, command=lambda x=j, y=i: button_click(grid, buttons, x, y, target))
+                text=grid[i][j],
+                width=10,
+                height=5,
+                command=lambda x=j, y=i: button_click(grid, buttons, x, y, target))
             button.grid(row=i, column=j, padx=5, pady=5)
             buttons[(i, j)] = button
-            # turn(grid, j, i)
+
     window.mainloop()
 
 
