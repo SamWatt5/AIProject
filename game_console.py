@@ -5,7 +5,9 @@ def main():
     grid = createGrid(3)
     randomizeGrid(grid)
     printGrid(grid)
-    turn(grid, 1, 1)
+    for i in range(len(grid)):
+        for j in range(len(grid)):
+            turn(grid, j, i)
 
 
 def createGrid(size):
@@ -43,13 +45,18 @@ def printGrid(grid):
 
 
 def check(grid, x, y):
-    print("checked grid[" + str(x) + "][" + str(y) + "] = " + str(grid[x][y]))
+    # print("checked grid[" + str(x) + "][" + str(y) + "] = " + str(grid[x][y]))
+
+    if x > len(grid)-1 or y > len(grid)-1 or x < 0 or y < 0:
+        return False
     if grid[y][x] == " ":
         return True
     return False
 
 
 def turn(grid, x, y):
+    print(grid[y][x])
+
     # up x y-1
     if check(grid, x, y-1):
         print("up")
