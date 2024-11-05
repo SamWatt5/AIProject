@@ -14,16 +14,27 @@ def main():
     game.printGrid(grid)
 
     target = [[1, 2, 3], [4, 5, 6], [7, 8, " "]]
-    titleLabel = tk.Label(text="8-Puzzle Solver", font=("ariel", "20"))
+    titleLabel = tk.Label(text="8-Puzzle Solver",
+                          font=("ariel", "20"), bg="#6096ba", fg="#e7ecef")
 
-    buttonFrame = tk.Frame(window)
-    titleLabel.grid(row=0, column=0)
-    buttonFrame.grid(padx=10, pady=10, row=0, column=1)
+    gameFrame = tk.Frame(window)
+    titleLabel.pack(side=tk.TOP, fill=tk.X)
+    gameFrame.pack(padx=10, pady=10, side=tk.LEFT)
+    buttons = createButtons(gameFrame, grid, target)
 
+    window.mainloop()
+
+
+def createRightFrame(window, grid, target):
+    return "hi"
+
+
+def createButtons(frame, grid, target):
     buttons = {}
     for i in range(len(grid)):
         for j in range(len(grid)):
             button = tk.Button(
+                frame,
                 text=grid[i][j],
                 width=10,
                 height=5,
@@ -31,13 +42,12 @@ def main():
                     grid, buttons, x, y, target),
                 bg="#274c77",
                 fg="#e7ecef",
-                font=("ariel", "12", "bold")
+                font=("ariel", "10", "bold")
             )
             # button.wm_attributes('-transparentcolor', '#ab23ff')
             button.grid(row=i, column=j, padx=1, pady=1)
             buttons[(i, j)] = button
-
-    window.mainloop()
+    return buttons
 
 
 def button_click(grid, buttons, x, y, target):
