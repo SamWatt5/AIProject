@@ -28,12 +28,17 @@ def display_movie(movie_title):
     movie = df[df["Title"] == movie_title]
     director = movie["Director"].iloc[0]
     cast = movie["Cast"].iloc[0].split(", ")[:3]
+    genres = movie["Genre"].iloc[0].split(", ")
 
     print("Title:\n  " + movie_title + "\n")
     print("Director:\n  " + director + "\n")
     print("Cast:")
     for actor in cast:
         print("  " + actor)
+    print("\n")
+    print("Genres:")
+    for genre in genres:
+        print("  " + genre)
 
     poster_url = movie["Poster"].iloc[0]
     with urllib.request.urlopen(poster_url) as u:
@@ -47,11 +52,16 @@ def display_movie(movie_title):
     actor_labels = [tk.Label(root, text="Cast:")]
     for actor in cast:
         actor_labels.append(tk.Label(root, text=(actor)))
+    genre_labels = [tk.Label(root, text="Genres:")]
+    for genre in genres:
+        genre_labels.append(tk.Label(root, text=(genre)))
 
     poster_label.pack()
     title_label.pack()
     director_label.pack()
     for label in actor_labels:
+        label.pack()
+    for label in genre_labels:
         label.pack()
 
     root.mainloop()
