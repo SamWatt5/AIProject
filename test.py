@@ -35,7 +35,7 @@ def display_movie(movie_title):
     print("Cast:")
     for actor in cast:
         print("  " + actor)
-    print("\n")
+    print("")
     print("Genres:")
     for genre in genres:
         print("  " + genre)
