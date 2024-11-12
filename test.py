@@ -45,6 +45,7 @@ def display_movie(movie_title):
         raw_data = u.read()
     image = Image.open(io.BytesIO(raw_data))
     root = tk.Tk()
+    # image = image.resize((image.width*2, image.height*2))
     photo = ImageTk.PhotoImage(image)
     poster_label = tk.Label(root, image=photo)
     title_label = tk.Label(root, text=movie_title, font="tkHeadingFont")
@@ -68,31 +69,33 @@ def display_movie(movie_title):
 
 
 def search():
-    search_term = input("Please search for a movie: ")
-    count = 0
     movies_found = []
-    for movie in df.index:
-        movie_title = df.loc[movie, "Title"]
-        if (SequenceMatcher(None, search_term.capitalize(), movie_title.capitalize(), autojunk=False).ratio() > 0.8) or search_term.capitalize() in movie_title.capitalize():
-            count += 1
-            movies_found.append(movie_title)
+    while len(movies_found) < 1:
+        search_term = input("Please search for a movie: ")
+        count = 0
 
-    match len(movies_found):
-        case 0:
-            print("No movies found")
-        case 1:
-            print("One movie found!")
-            return movies_found[0]
-        case _:
-            print("Found more than one movie, please choose(1-" +
-                  str(len(movies_found)) + ")")
-            i = 1
-            for movie in movies_found:
-                print(str(i) + ". " + movie)
-                i += 1
+        for movie in df.index:
+            movie_title = df.loc[movie, "Title"]
+            if (SequenceMatcher(None, search_term.capitalize(), movie_title.capitalize(), autojunk=False).ratio() > 0.75) or search_term.capitalize() in movie_title.capitalize():
+                count += 1
+                movies_found.append(movie_title)
 
-            choice = int(input("\n"))
-            return movies_found[choice-1]
+        match len(movies_found):
+            case 0:
+                print("No movies found")
+            case 1:
+                print("One movie found!")
+                return movies_found[0]
+            case _:
+                print("Found more than one movie, please choose(1-" +
+                      str(len(movies_found)) + ")")
+                i = 1
+                for movie in movies_found:
+                    print(str(i) + ". " + movie)
+                    i += 1
+
+                choice = int(input("\n"))
+                return movies_found[choice-1]
 
 
 main()
