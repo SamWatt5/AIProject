@@ -2,12 +2,13 @@
 
 We want to create a movie suggestion system. The user will input any movies they have recently watched, along with a score they give them. They will also be given the option to input what genres they like. Our goal will then be to develop an AI that will sort through a dataset of movies finding similar movies which the user would be interested in. We will achieve this by implementing three searching algorithms for this project, a breadth-first search, which will give more general suggestions, a depth-first search, giving recommendations very similar to each other, and a heuristic search, which will be most tailored to the user.
 
-# Running...
+# Running The Program
 
 To be able to run the program for ther first time, please run
-`win-dependencies`on windows
-or
-`mac-dependencies`on mac
+`win-dependencies`
+on windows or
+`mac-dependencies`
+on mac
 
 # The Problem
 
