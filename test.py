@@ -6,6 +6,8 @@ import tkinter as tk
 import urllib.request
 import io
 
+from graph import MovieGraph
+
 sys.stdout.reconfigure(encoding='utf-8')
 
 df = pd.read_csv(
@@ -19,8 +21,10 @@ removed_movies = []
 
 
 def main():
-    starting_movie = search()
-    display_movie(starting_movie)
+    graph = MovieGraph(df)
+
+    # starting_movie = search()
+    # display_movie(starting_movie)
 
 
 def display_movie(movie_title):
