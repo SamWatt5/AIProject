@@ -4,7 +4,7 @@ echo "Creating virtual environment..."
 py -m venv .venv
 
 echo "Activating virtual environment..."
-.venv/Scripts/activate
+call .venv\Scripts\activate
 
 echo "Installing pip..."
 py -m pip install --upgrade pip
