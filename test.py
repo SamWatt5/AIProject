@@ -80,6 +80,8 @@ def search():
                 count += 1
                 movies_found.append(movie_title)
 
+        movies_found.sort()
+
         match len(movies_found):
             case 0:
                 print("No movies found")
