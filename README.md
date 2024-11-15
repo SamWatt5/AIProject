@@ -2,31 +2,29 @@
 
 We want to create a movie suggestion system. The user will input any movies they have recently watched, along with a score they give them. They will also be given the option to input what genres they like. Our goal will then be to develop an AI that will sort through a dataset of movies finding similar movies which the user would be interested in. We will achieve this by implementing three searching algorithms for this project, a breadth-first search, which will give more general suggestions, a depth-first search, giving recommendations very similar to each other, and a heuristic search, which will be most tailored to the user.
 
-# The Problem 
+# Running...
 
-The program will always start by prompting the user to enter information. They will have 3 options, input recent movies they have watched and how they felt about them, input genres they enjoy, or they can choose to input both. 
+To be able to run the program for ther first time, please run
+`win-dependencies`
+on windows
 
- 
+# The Problem
 
-When inputting their recent films, they will be prompted to input the name and how they personally rate the film. If the movie is not found in the dataset, they will also be prompted to answer follow up questions. These are, the genre and up to 5 leading actors. 
+The program will always start by prompting the user to enter information. They will have 3 options, input recent movies they have watched and how they felt about them, input genres they enjoy, or they can choose to input both.
 
-When choosing genres, the user will input their favourite 3 genres and up to 10 other liked genres. They will also be prompted to input disliked genres and be able to blacklist genres. 
+When inputting their recent films, they will be prompted to input the name and how they personally rate the film. If the movie is not found in the dataset, they will also be prompted to answer follow up questions. These are, the genre and up to 5 leading actors.
 
-If the user picks the both option it will combine these two, first asking about the films and then about the genres. 
+When choosing genres, the user will input their favourite 3 genres and up to 10 other liked genres. They will also be prompted to input disliked genres and be able to blacklist genres.
 
- 
+If the user picks the both option it will combine these two, first asking about the films and then about the genres.
 
-The results of these will be the output of a highly recommended movie. There will also be the option to sort by their favourite genres and actors. 
+The results of these will be the output of a highly recommended movie. There will also be the option to sort by their favourite genres and actors.
 
- 
+The user will be able to say if they have already watched the highly recommended movie to show that the search worked, or they will be able to review it. A high review meaning it worked as intended.
 
-The user will be able to say if they have already watched the highly recommended movie to show that the search worked, or they will be able to review it. A high review meaning it worked as intended. 
+We will track the recommendations cost by seeing how many movies they go through before finding one they want to watch.
 
- 
-
-We will track the recommendations cost by seeing how many movies they go through before finding one they want to watch.  
-
-We will also track the user preference cost which will track how often the system is suggesting irrelevant movies costing user dissatisfaction.  
+We will also track the user preference cost which will track how often the system is suggesting irrelevant movies costing user dissatisfaction.
 
 # Assignment Brief
 
@@ -36,6 +34,7 @@ part of the module. The choice of problem is unrestricted, but the size of the w
 suitable for the available time (5 weeks) and group size (up to 5 people).
 In choosing your problem and planning your work, keep in mind the four questions we have
 discussed in class:
+
 1. What is the AI problem that we want to solve?
 2. Why it is an important problem to solve?
 3. How can we solve it?
