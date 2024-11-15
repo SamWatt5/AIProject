@@ -1,4 +1,4 @@
-import pandas as pd 
+import pandas as pd
 import matplotlib.pyplot as plt
 
 df = pd.read_csv(
@@ -6,3 +6,6 @@ df = pd.read_csv(
 
 df.plot(kind='scatter', x='Rating', y='Metascore')
 plt.show()
+
+# USE ARRAY FOR EDGES
+# IF NOTHING RELATED SET EDGE TO 0 ELSE USE PATH COST FUNCTION TO GET ARRAY
