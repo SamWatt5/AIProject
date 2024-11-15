@@ -5,7 +5,7 @@ We want to create a movie suggestion system. The user will input any movies they
 # Running The Program
 
 To be able to run the program for ther first time, please run
-`win-dependencies`
+`./win-dependencies`
 on windows or
 `mac-linux-dependencies`
 on mac
