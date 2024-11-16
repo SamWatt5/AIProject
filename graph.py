@@ -7,11 +7,19 @@ class MovieGraph:
     def __init__(self, df):
         self.df = df
         self.numMovies = len(df)
-        self.movieTitles = []
-        for movie in self.df.index:
-            self.movieTitles.append(self.df.loc[movie, "Title"])
+        self.movieTitles = np.array(
+            [self.df.loc[movie, "Title"] for movie in self.df.index])
 
-        self.adjMatrix = self.create_adj_matrix()
+        try:
+            self.adjMatrix = []
+            with open("adj_matrix.txt", "r") as f:
+                for line in f:
+                    row = list(map(float, line.strip().split(" ")))
+                    self.adjMatrix.append(row)
+            self.adjMatrix = np.array(self.adjMatrix)
+        except FileNotFoundError:
+            self.adjMatrix = self.create_adj_matrix()
+            self.save_adj_matrix_to_file()
 
         print(f"Number of movies: {self.numMovies}")
 
@@ -54,7 +62,7 @@ class MovieGraph:
 
         # if costs are the max for all criteria, dont count, and instead just use zero
         max_genre_cost = 5
-        max_director_cost = 5
+        max_director_cost = 3
         max_cast_cost = 5
         max_rating_cost = 4
 
@@ -83,8 +91,20 @@ class MovieGraph:
         print("Created adjacency matrix!\n\n")
         return adj_matrix
 
+    def save_adj_matrix_to_file(self):
+        try:
+            with open("adj_matrix.txt", 'w') as f:
+                for i in range(self.numMovies):
+                    row = ' '.join(map(str, self.adjMatrix[i]))
+                    f.write(row + '\n')
+            f.close()
+        except FileNotFoundError:
+            f = open("adj_matrix.txt", "x")
+            f.close()
+            self.save_adj_matrix_to_file()
+
     def get_node(self, title):
-        return self.movieTitles.index(title)
+        return np.where(self.movieTitles == title)[0]
 
     def get_p_cost(self, movie1_title, movie2_title):
         n1 = self.get_node(movie1_title)
