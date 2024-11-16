@@ -60,6 +60,7 @@ class MovieGraph:
         total_costs = self.genre_costs + self.director_costs + \
             self.cast_costs + self.rating_costs
 
+        # THIS BIT ISNT WORKING RIGHT
         # if costs are the max for all criteria, dont count, and instead just use zero
         max_genre_cost = 5
         max_director_cost = 3
@@ -69,7 +70,7 @@ class MovieGraph:
         max_total_cost = max_genre_cost + \
             max_director_cost + max_cast_cost + max_rating_cost
 
-        total_costs[total_costs == max_total_cost] == 0
+        total_costs[total_costs >= max_total_cost] = 0
 
         adj_matrix = total_costs
         # MAYBE STORE THIS ALL TO A FILE SO DOESNT NEED TO RUN EVERY TIME!
