@@ -25,6 +25,7 @@ class MovieGraph:
 
         print("IM HERE")
 
+    # Creates an adjancency matrix from a data set
     def create_adj_matrix(self):
         # creating numpy array of zeros
         # numpy arrays speedier than python list, since written in C
@@ -95,6 +96,7 @@ class MovieGraph:
         print("Created adjacency matrix!\n\n")
         return adj_matrix
 
+    # Saves the adjancency matrix to a file 
     def save_adj_matrix_to_file(self):
         try:
             with open("adj_matrix.txt", 'w') as f:
@@ -107,9 +109,11 @@ class MovieGraph:
             f.close()
             self.save_adj_matrix_to_file()
 
+    # Returns a node
     def get_node(self, title):
         return np.where(self.movieTitles == title)[0]
 
+    # Returns the path cost 
     def get_p_cost(self, movie1_title, movie2_title):
         n1 = self.get_node(movie1_title)
         n2 = self.get_node(movie2_title)
@@ -119,6 +123,7 @@ class MovieGraph:
         print(f"rating: {self.rating_costs[n1, n2]}")
         return self.adjMatrix[n1, n2]
 
+    # Returns the genre path cost between two movies
     def genre_path_cost(self, genres1, genres2):
         if genres1 == genres2:
             return 1
@@ -127,11 +132,13 @@ class MovieGraph:
         else:
             return 5
 
+    # Returns the director path cost between two movies
     def director_path_cost(self, directors1, directors2):
         if directors1 & directors2:
             return 1
         return 3
 
+    # Returns the cast path cost between two movies
     def cast_path_cost(self, cast1, cast2):
         if cast1 == cast2:
             return 1
@@ -139,6 +146,7 @@ class MovieGraph:
             return 3
         return 5
 
+    # Returns the rating path cost between two movies
     def rating_path_cost(self, rating1, rating2):
         rating_diff = abs(rating1 - rating2)
         if rating_diff <= 1:

@@ -8,6 +8,7 @@ import io
 
 from graph import MovieGraph
 
+# Creatign the data frame
 sys.stdout.reconfigure(encoding='utf-8')
 
 df = pd.read_csv(
@@ -19,12 +20,16 @@ df.drop(columns="Review Count", inplace=True)
 removed_num = 0
 removed_movies = []
 
-
+# Main function
 def main():
+    # Creating the movie graph
     graph = MovieGraph(df)
+
+    # Searching for movie titles
     starting_movie = search()
     other_movie = search()
 
+    
     movie1 = df[df["Title"] == starting_movie]
     directors1 = movie1["Director"].iloc[0].split(", ")
     cast1 = movie1["Cast"].iloc[0].split(", ")
