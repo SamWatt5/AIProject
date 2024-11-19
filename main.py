@@ -25,8 +25,8 @@ def main():
     starting_movie = search()
     other_movie = search()
 
-    print(f"genre: {graph.genre_path_cost(starting_movie, other_movie)}\ndirector: {graph.director_path_cost(starting_movie, other_movie)}\ncast: {
-          graph.cast_path_cost(starting_movie, other_movie)}\nrating: {graph.rating_path_cost(starting_movie, other_movie)}")
+    print(f"genre: {graph.genre_path_cost(starting_movie["Genre"].apply(set), other_movie["Genre"].apply(set))}\ndirector: {graph.director_path_cost(starting_movie["Director"].apply(set), other_movie["Director"].apply(set))}\ncast: {
+          graph.cast_path_cost(starting_movie["Cast"].apply(set), other_movie["Cast"].apply(set))}\nrating: {graph.rating_path_cost(starting_movie, other_movie)}")
 
     # display_movie(starting_movie)
 
