@@ -31,7 +31,7 @@ class MovieGraph:
         adj_matrix = np.zeros((self.numMovies, self.numMovies))
 
         # what this is doing is getting all the criterias values from the df
-        # and if its a list, like the cast, genres etc. then it converts it to a set
+        # and if it's a list, like the cast, genres etc. then it converts it to a set
         genres = self.df["Genre"].apply(set).values
         # director is a set since movies can have more than one i.e. coen brothers :)
         directors = self.df["Director"].apply(set).values
@@ -61,7 +61,7 @@ class MovieGraph:
             self.cast_costs + self.rating_costs
 
         # THIS BIT ISNT WORKING RIGHT
-        # if costs are the max for all criteria, dont count, and instead just use zero
+        # if costs are the max for all criteria, don't count, and instead just use zero
         max_genre_cost = 5
         max_director_cost = 3
         max_cast_cost = 5
