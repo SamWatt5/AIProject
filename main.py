@@ -38,11 +38,10 @@ def main():
     print(f"genre: {graph.genre_path_cost(movie1["Genre"].apply(set), movie2["Genre"].apply(set))}\ndirector: {graph.director_path_cost(movie1["Director"].apply(set), movie2["Director"].apply(set))}\ncast: {
           graph.cast_path_cost(movie1["Cast"].apply(set), movie2["Cast"].apply(set))}\nrating: {graph.rating_path_cost(movie1, movie2)}")
 
-
     display_movie(starting_movie)
 
 
-def display_movie(movie_title)
+def display_movie(movie_title):
     print("\nDisplaying Movie.....\n")
     movie = df[df["Title"] == movie_title]
     director = movie["Director"].iloc[0]
