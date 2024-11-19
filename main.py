@@ -23,11 +23,12 @@ removed_movies = []
 def main():
     graph = MovieGraph(df)
     starting_movie = search()
-    # other_movie = search()
+    other_movie = search()
 
-    # print(f"{graph.get_p_cost(starting_movie, other_movie)}")
+    print(f"genre: {graph.genre_path_cost(starting_movie, other_movie)}\ndirector: {graph.director_path_cost(starting_movie, other_movie)}\ncast: {
+          graph.cast_path_cost(starting_movie, other_movie)}\nrating: {graph.rating_path_cost(starting_movie, other_movie)}")
 
-    display_movie(starting_movie)
+    # display_movie(starting_movie)
 
 
 def display_movie(movie_title):
