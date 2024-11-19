@@ -1,19 +1,32 @@
+import numpy as np
+
+
 class Problem:
-    def __init__(self, initialState, goalState):
-        self.initialState = initialState
-        self.goalState = goalState
+    def __init__(self, startingMovie, graph, closeness):
+        self.startingMovie = startingMovie
+        self.graph = graph
+        self.closeness = closeness
 
-    def actions(self, state):
-        # return all actions possible from a state
+    def actions(self, movie):
+        index = np.where(self.graph.movieTitles == movie)[0][0]
+        print(index)
         actions_list = []
-        actions_list
+        count = 0
+        for i in range(self.graph.numMovies):
+            if self.graph.adjMatrix[index][i] != 0:
+                actions_list.append(i)
+                count += 1
 
-    def result(self, state, action):
+        print(count)
+        return actions_list
+
+    def result(self, movie, action):
         # do action on state and return new state, action is in actions_list in actions function
-        new_state = state + action
-        return new_state
+        # action is index in adjmatrix
+        new_movie = self.graph.movieTitles[action]
+        return new_movie
 
-    def test_if_goal(self, state):
+    def goal_test(self, movie):
         return state == self.goalState
 
     def path_cost(self, cost, state1, action, state2):

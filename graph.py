@@ -23,7 +23,7 @@ class MovieGraph:
 
         print(f"Number of movies: {self.numMovies}")
 
-        print("IM HERE")
+        # print("IM HERE")
 
     # Creates an adjancency matrix from a data set
     def create_adj_matrix(self):

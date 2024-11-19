@@ -6,6 +6,7 @@ import tkinter as tk
 import urllib.request
 import io
 
+from search import *
 from graph import MovieGraph
 
 # Creatign the data frame
@@ -28,29 +29,34 @@ def main():
     graph = MovieGraph(df)
 
     # Searching for movie titles
-    starting_movie = search()
-    other_movie = search()
+    starting_movie_title = search()
+    # starting_movie = df[df["Title"] == starting_movie_title]
 
-    movie1 = df[df["Title"] == starting_movie]
-    directors1 = movie1["Director"].iloc[0].split(", ")
-    cast1 = movie1["Cast"].iloc[0].split(", ")
-    genres1 = movie1["Genre"].iloc[0].split(", ")
+    problem = Problem(starting_movie_title, graph)
+    print(problem.actions(starting_movie_title))
 
-    movie2 = df[df["Title"] == other_movie]
-    directors2 = movie2["Director"].iloc[0].split(", ")
-    cast2 = movie2["Cast"].iloc[0].split(", ")
-    genres2 = movie2["Genre"].iloc[0].split(", ")
+    # other_movie = search()
 
-    print(f"Movie 1 - Genres: {genres1}, Directors: {
-          directors1}, Cast: {cast1}")
+    # movie1 = df[df["Title"] == starting_movie]
+    # directors1 = movie1["Director"].iloc[0].split(", ")
+    # cast1 = movie1["Cast"].iloc[0].split(", ")
+    # genres1 = movie1["Genre"].iloc[0].split(", ")
 
-    print(f"Movie 2 - Genres: {genres2}, Directors: {
-        directors2}, Cast: {cast2}")
+    # movie2 = df[df["Title"] == other_movie]
+    # directors2 = movie2["Director"].iloc[0].split(", ")
+    # cast2 = movie2["Cast"].iloc[0].split(", ")
+    # genres2 = movie2["Genre"].iloc[0].split(", ")
 
-    print(f"genre: {graph.genre_path_cost(set(genres1), set(genres2))}\n"
-          f"director: {graph.director_path_cost(
-              set(directors1), set(directors2))}\n"
-          f"cast: {graph.cast_path_cost(set(cast1), set(cast2))}\n")
+    # print(f"Movie 1 - Genres: {genres1}, Directors: {
+    #       directors1}, Cast: {cast1}")
+
+    # print(f"Movie 2 - Genres: {genres2}, Directors: {
+    #     directors2}, Cast: {cast2}")
+
+    # print(f"genre: {graph.genre_path_cost(set(genres1), set(genres2))}\n"
+    #       f"director: {graph.director_path_cost(
+    #           set(directors1), set(directors2))}\n"
+    #       f"cast: {graph.cast_path_cost(set(cast1), set(cast2))}\n")
 
     # display_movie(starting_movie)
 
