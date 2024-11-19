@@ -43,7 +43,7 @@ def main():
           f"cast: {graph.cast_path_cost(set(cast1), set(cast2))}\n"
           f"rating: {graph.rating_path_cost(rating1, rating2)}")
 
-    # display_movie(starting_movie)
+    display_movie(starting_movie)
 
 
 def display_movie(movie_title):
