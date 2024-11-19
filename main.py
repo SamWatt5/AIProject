@@ -26,18 +26,18 @@ def main():
     other_movie = search()
 
     movie1 = df[df["Title"] == starting_movie]
-    director1 = movie1["Director"].iloc[0]
+    directors1 = movie1["Director"].iloc[0].split(", ")
     cast1 = movie1["Cast"].iloc[0].split(", ")[:3]
     genres1 = movie1["Genre"].iloc[0].split(", ")
     rating1 = movie1["Rating"].iloc[0]
 
     movie2 = df[df["Title"] == other_movie]
-    director2 = movie2["Director"].iloc[0]
+    directors2 = movie2["Director"].iloc[0].split(", ")
     cast2 = movie2["Cast"].iloc[0].split(", ")
     genres2 = movie2["Genre"].iloc[0].split(", ")
     rating2 = movie2["Rating"].iloc[0]
 
-    print(f"genre: {graph.genre_path_cost(set(movie1["Genre"].iloc[0].split(", ")), set(movie2["Genre"].iloc[0].split(", ")))}\n"
+    print(f"genre: {graph.genre_path_cost(set(genres1), set(genres2))}\n"
           f"director: {graph.director_path_cost(set(movie1["Director"].iloc[0].split(
               ", ")), set(movie2["Director"].iloc[0].split(", ")))}\n"
           f"cast: {graph.cast_path_cost(set(movie1["Cast"].iloc[0].split(
