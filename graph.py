@@ -33,54 +33,54 @@ class MovieGraph:
 
         # what this is doing is getting all the criterias values from the df
         # and if it's a list, like the cast, genres etc. then it converts it to a set
-        genres = self.df["Genre"].apply(set).values
+        genres = self.df["Genre"].apply(lambda x: set(x.split(", "))).values
         # director is a set since movies can have more than one i.e. coen brothers :)
-        directors = self.df["Director"].apply(set).values
-        cast = self.df["Cast"].apply(set).values
+        directors = self.df["Director"].apply(
+            lambda x: set(x.split(", "))).values
+        cast = self.df["Cast"].apply(lambda x: set(x.split(", "))).values
         ratings = self.df["Rating"].values
 
         # what these are doing is going through all the pairs of criterias, and checking similarities and adding that to a new 2d nunmpy array
         self.genre_costs = np.array([[self.genre_path_cost(genres[i], genres[j]) for j in range(
             self.numMovies)] for i in range(self.numMovies)])
         print("genres done")
-        self.save_intermediary_to_file("genres.txt", self.genre_costs)
+        # self.save_intermediary_to_file("genres.txt", self.genre_costs)
 
         self.director_costs = np.array([[self.director_path_cost(
             directors[i], directors[j]) for j in range(self.numMovies)] for i in range(self.numMovies)])
         print("director done")
-        self.save_intermediary_to_file("directors.txt", self.director_costs)
+        # self.save_intermediary_to_file("directors.txt", self.director_costs)
 
         self.cast_costs = np.array([[self.cast_path_cost(cast[i], cast[j]) for j in range(
             self.numMovies)] for i in range(self.numMovies)])
         print("cast done")
-        self.save_intermediary_to_file("cast.txt", self.cast_costs)
+        # self.save_intermediary_to_file("cast.txt", self.cast_costs)
 
-        self.rating_costs = np.array([[self.rating_path_cost(ratings[i], ratings[j]) for j in range(
-            self.numMovies)] for i in range(self.numMovies)])
+        # self.rating_costs = np.array([[self.rating_path_cost(ratings[i], ratings[j]) for j in range(
+        # self.numMovies)] for i in range(self.numMovies)])
         print("ratings done")
-        self.save_intermediary_to_file("ratings.txt", self.rating_costs)
+        # self.save_intermediary_to_file("ratings.txt", self.rating_costs)
 
         # calculates total costs
         #  - MAY CHANGE THIS TO NOT USE TOTAL AND STORE ARRAY AT EACH NODE INSTEAD
         total_costs = self.genre_costs + self.director_costs + \
-            self.cast_costs + self.rating_costs
-
+            self.cast_costs
         # THIS BIT ISNT WORKING RIGHT
         # if costs are the max for all criteria, don't count, and instead just use zero
         max_genre_cost = 5
         max_director_cost = 3
         max_cast_cost = 5
-        max_rating_cost = 4
+        # max_rating_cost = 4
 
         max_total_cost = max_genre_cost + \
-            max_director_cost + max_cast_cost + max_rating_cost
+            max_director_cost + max_cast_cost
 
         total_costs[total_costs >= max_total_cost] = 0
 
         adj_matrix = total_costs
 
         print(f"{self.movieTitles[0]} {
-              self.movieTitles[1]} {self.genre_costs[0][1]}  {self.director_costs[0][1]}  {self.cast_costs[0][1]} {self.rating_costs[0][1]} {adj_matrix[0][1]}")
+              self.movieTitles[1]} {self.genre_costs[0][1]}  {self.director_costs[0][1]}  {self.cast_costs[0][1]} {adj_matrix[0][1]}")
         # MAYBE STORE THIS ALL TO A FILE SO DOESNT NEED TO RUN EVERY TIME!
 
         # OLD SLOW CODE (TAKES LIKE 30 MINS TO COMPLETE! :0 ):
@@ -141,7 +141,7 @@ class MovieGraph:
 
     # Returns the genre path cost between two movies
     def genre_path_cost(self, genres1, genres2):
-        print(f"Comparing genres: {genres1} and {genres2}")
+        # print(f"Comparing genres: {genres1} and {genres2}")
         if genres1 == genres2:
             return 1
         elif genres1 & genres2:
@@ -151,14 +151,14 @@ class MovieGraph:
 
     # Returns the director path cost between two movies
     def director_path_cost(self, directors1, directors2):
-        print(f"Comparing directors: {directors1} and {directors2}")
+        # print(f"Comparing directors: {directors1} and {directors2}")
         if directors1 & directors2:
             return 1
         return 3
 
     # Returns the cast path cost between two movies
     def cast_path_cost(self, cast1, cast2):
-        print(f"Comparing cast: {cast1} and {cast2}")
+        # print(f"Comparing cast: {cast1} and {cast2}")
         if cast1 == cast2:
             return 1
         elif cast1 & cast2:
@@ -167,7 +167,7 @@ class MovieGraph:
 
     # Returns the rating path cost between two movies
     def rating_path_cost(self, rating1, rating2):
-        print(f"Comparing ratings: {rating1} and {rating2}")
+        # print(f"Comparing ratings: {rating1} and {rating2}")
         rating_diff = abs(rating1 - rating2)
         if rating_diff <= 1:
             return 1
