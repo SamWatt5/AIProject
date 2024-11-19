@@ -29,18 +29,20 @@ def main():
     director1 = movie1["Director"].iloc[0]
     cast1 = movie1["Cast"].iloc[0].split(", ")[:3]
     genres1 = movie1["Genre"].iloc[0].split(", ")
+    rating1 = movie1["Rating"].iloc[0]
 
     movie2 = df[df["Title"] == other_movie]
     director2 = movie2["Director"].iloc[0]
     cast2 = movie2["Cast"].iloc[0].split(", ")
     genres2 = movie2["Genre"].iloc[0].split(", ")
+    rating2 = movie2["Rating"].iloc[0]
 
     print(f"genre: {graph.genre_path_cost(set(movie1["Genre"].iloc[0].split(", ")), set(movie2["Genre"].iloc[0].split(", ")))}\n"
           f"director: {graph.director_path_cost(set(movie1["Director"].iloc[0].split(
               ", ")), set(movie2["Director"].iloc[0].split(", ")))}\n"
           f"cast: {graph.cast_path_cost(set(movie1["Cast"].iloc[0].split(
               ", ")), set(movie2["Cast"].iloc[0].split(", ")))}\n"
-          f"rating: {graph.rating_path_cost(movie1, movie2)}")
+          f"rating: {graph.rating_path_cost(rating1, rating2)}")
 
     display_movie(starting_movie)
 
