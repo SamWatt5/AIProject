@@ -27,7 +27,7 @@ def main():
 
     movie1 = df[df["Title"] == starting_movie]
     directors1 = movie1["Director"].iloc[0].split(", ")
-    cast1 = movie1["Cast"].iloc[0].split(", ")[:3]
+    cast1 = movie1["Cast"].iloc[0].split(", ")
     genres1 = movie1["Genre"].iloc[0].split(", ")
     rating1 = movie1["Rating"].iloc[0]
 
