@@ -21,6 +21,8 @@ removed_num = 0
 removed_movies = []
 
 # Main function
+
+
 def main():
     # Creating the movie graph
     graph = MovieGraph(df)
@@ -29,7 +31,6 @@ def main():
     starting_movie = search()
     other_movie = search()
 
-    
     movie1 = df[df["Title"] == starting_movie]
     directors1 = movie1["Director"].iloc[0].split(", ")
     cast1 = movie1["Cast"].iloc[0].split(", ")
@@ -42,12 +43,19 @@ def main():
     genres2 = movie2["Genre"].iloc[0].split(", ")
     rating2 = movie2["Rating"].iloc[0]
 
+    print(f"Movie 1 - Genres: {genres1}, Directors: {
+          directors1}, Cast: {cast1}, Rating: {rating1}")
+
+    print(f"Movie 2 - Genres: {genres2}, Directors: {
+        directors2}, Cast: {cast2}, Rating: {rating2}")
+
     print(f"genre: {graph.genre_path_cost(set(genres1), set(genres2))}\n"
-          f"director: {graph.director_path_cost(set(directors1), set(directors2))}\n"
+          f"director: {graph.director_path_cost(
+              set(directors1), set(directors2))}\n"
           f"cast: {graph.cast_path_cost(set(cast1), set(cast2))}\n"
           f"rating: {graph.rating_path_cost(rating1, rating2)}")
 
-    display_movie(starting_movie)
+    # display_movie(starting_movie)
 
 
 def display_movie(movie_title):

@@ -43,18 +43,22 @@ class MovieGraph:
         self.genre_costs = np.array([[self.genre_path_cost(genres[i], genres[j]) for j in range(
             self.numMovies)] for i in range(self.numMovies)])
         print("genres done")
+        self.save_intermediary_to_file("genres.txt", self.genre_costs)
 
         self.director_costs = np.array([[self.director_path_cost(
             directors[i], directors[j]) for j in range(self.numMovies)] for i in range(self.numMovies)])
         print("director done")
+        self.save_intermediary_to_file("directors.txt", self.director_costs)
 
         self.cast_costs = np.array([[self.cast_path_cost(cast[i], cast[j]) for j in range(
             self.numMovies)] for i in range(self.numMovies)])
         print("cast done")
+        self.save_intermediary_to_file("cast.txt", self.cast_costs)
 
         self.rating_costs = np.array([[self.rating_path_cost(ratings[i], ratings[j]) for j in range(
             self.numMovies)] for i in range(self.numMovies)])
         print("ratings done")
+        self.save_intermediary_to_file("ratings.txt", self.rating_costs)
 
         # calculates total costs
         #  - MAY CHANGE THIS TO NOT USE TOTAL AND STORE ARRAY AT EACH NODE INSTEAD
@@ -76,7 +80,7 @@ class MovieGraph:
         adj_matrix = total_costs
 
         print(f"{self.movieTitles[0]} {
-              self.movieTitles[1]} {adj_matrix[0][1]}")
+              self.movieTitles[1]} {self.genre_costs[0][1]}  {self.director_costs[0][1]}  {self.cast_costs[0][1]} {self.rating_costs[0][1]} {adj_matrix[0][1]}")
         # MAYBE STORE THIS ALL TO A FILE SO DOESNT NEED TO RUN EVERY TIME!
 
         # OLD SLOW CODE (TAKES LIKE 30 MINS TO COMPLETE! :0 ):
@@ -96,7 +100,7 @@ class MovieGraph:
         print("Created adjacency matrix!\n\n")
         return adj_matrix
 
-    # Saves the adjancency matrix to a file 
+    # Saves the adjancency matrix to a file
     def save_adj_matrix_to_file(self):
         try:
             with open("adj_matrix.txt", 'w') as f:
@@ -109,11 +113,23 @@ class MovieGraph:
             f.close()
             self.save_adj_matrix_to_file()
 
+    def save_intermediary_to_file(self, filename, costs):
+        try:
+            with open(filename, 'w') as f:
+                for i in range(self.numMovies):
+                    row = ' '.join(map(str, costs[i]))
+                    f.write(row + '\n')
+            f.close()
+        except FileNotFoundError:
+            f = open(filename, "x")
+            f.close()
+            self.save_intermediary_to_file(filename)
+
     # Returns a node
     def get_node(self, title):
         return np.where(self.movieTitles == title)[0]
 
-    # Returns the path cost 
+    # Returns the path cost
     def get_p_cost(self, movie1_title, movie2_title):
         n1 = self.get_node(movie1_title)
         n2 = self.get_node(movie2_title)
@@ -125,21 +141,24 @@ class MovieGraph:
 
     # Returns the genre path cost between two movies
     def genre_path_cost(self, genres1, genres2):
+        print(f"Comparing genres: {genres1} and {genres2}")
         if genres1 == genres2:
             return 1
-        elif genres1.intersection(genres2) != False:
+        elif genres1 & genres2:
             return 3
         else:
             return 5
 
     # Returns the director path cost between two movies
     def director_path_cost(self, directors1, directors2):
+        print(f"Comparing directors: {directors1} and {directors2}")
         if directors1 & directors2:
             return 1
         return 3
 
     # Returns the cast path cost between two movies
     def cast_path_cost(self, cast1, cast2):
+        print(f"Comparing cast: {cast1} and {cast2}")
         if cast1 == cast2:
             return 1
         elif cast1 & cast2:
@@ -148,6 +167,7 @@ class MovieGraph:
 
     # Returns the rating path cost between two movies
     def rating_path_cost(self, rating1, rating2):
+        print(f"Comparing ratings: {rating1} and {rating2}")
         rating_diff = abs(rating1 - rating2)
         if rating_diff <= 1:
             return 1
