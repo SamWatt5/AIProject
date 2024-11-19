@@ -25,9 +25,9 @@ def main():
     starting_movie = search()
     other_movie = search()
 
-    print(f"{graph.get_p_cost(starting_movie, other_movie)}")
+    # print(f"{graph.get_p_cost(starting_movie, other_movie)}")
 
-# display_movie(starting_movie)
+    display_movie(starting_movie)
 
 
 def display_movie(movie_title):
