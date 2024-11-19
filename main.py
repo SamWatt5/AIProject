@@ -38,9 +38,10 @@ def main():
     rating2 = movie2["Rating"].iloc[0]
 
     print(f"genre: {graph.genre_path_cost(set(genres1), set(genres2))}\n"
-      f"director: {graph.director_path_cost(set(directors1), set(directors2))}\n"
-      f"cast: {graph.cast_path_cost(set(cast1), set(cast2))}\n"
-      f"rating: {graph.rating_path_cost(rating1, rating2)}")
+          f"director: {graph.director_path_cost(
+              set(directors1), set(directors2))}\n"
+          f"cast: {graph.cast_path_cost(set(cast1), set(cast2))}\n"
+          f"rating: {graph.rating_path_cost(rating1, rating2)}")
 
     # display_movie(starting_movie)
 
