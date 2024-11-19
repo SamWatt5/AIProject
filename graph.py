@@ -73,6 +73,9 @@ class MovieGraph:
         total_costs[total_costs >= max_total_cost] = 0
 
         adj_matrix = total_costs
+
+        print(f"{self.movieTitles[0]} {
+              self.movieTitles[1]} {adj_matrix[0][1]}")
         # MAYBE STORE THIS ALL TO A FILE SO DOESNT NEED TO RUN EVERY TIME!
 
         # OLD SLOW CODE (TAKES LIKE 30 MINS TO COMPLETE! :0 ):
