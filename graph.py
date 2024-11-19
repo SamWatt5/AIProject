@@ -119,7 +119,7 @@ class MovieGraph:
     def genre_path_cost(self, genres1, genres2):
         if genres1 == genres2:
             return 1
-        elif genres1 & genres2:
+        elif genres1.intersection(genres2) != False:
             return 3
         else:
             return 5
