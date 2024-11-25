@@ -1,4 +1,5 @@
 import numpy as np
+from dataclasses import dataclass
 
 
 class Problem:
@@ -13,14 +14,29 @@ class Problem:
         actions_list = []
         count = 0
         for i in range(self.graph.numMovies):
-            if self.graph.adjMatrix[index][i] != 0:
+            if self.graph.adjMatrix[index][i] != 0 and self.graph.adjMatrix[index][i] < self.closeness:
                 actions_list.append(i)
                 count += 1
 
         print(count)
         return actions_list
 
-    def result(self, movie, action):
+    def a_star(self, startingMovie):
+        results_list = []
+        currMovie = startingMovie
+        table = [Table_entry(False, 0, 0) for _ in range(self.graph.numMovies)]
+        while len(results_list) < 10:
+            actions = actions(currMovie)
+            for action in actions:
+                cost = self.graph.adjMatrix[currMovie][action]
+                if cost == 3:
+                    results_list.append(self.result(action))
+                    currMovie = action
+                elif cost == 5:
+                    results_list.append(self.result(action))
+                    currMovie = action
+
+    def result(self, action):
         # do action on state and return new state, action is in actions_list in actions function
         # action is index in adjmatrix
         new_movie = self.graph.movieTitles[action]
@@ -32,6 +48,13 @@ class Problem:
     def path_cost(self, cost, state1, action, state2):
         # return cost of a solution path that arrives at state2 from state1 via action, default cost = 1,
         return cost+1
+
+
+@dataclass
+class Table_entry:
+    visited: bool
+    pathCost: int
+    predecessor: int
 
 
 class Node:
