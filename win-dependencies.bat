@@ -11,7 +11,7 @@ py -m pip install --upgrade pip
 py -m pip --version
 
 echo "Installing packages..."
-pip install pandas pillow tk flask
+pip install pandas pillow tk flask flask-cors
 if %errorlevel% neq 0 (
     echo "Error: Failed to install packages."
     exit /b 1

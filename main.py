@@ -5,7 +5,9 @@ from PIL import ImageTk, Image
 import tkinter as tk
 import urllib.request
 import io
-
+from flask import Flask
+from flask_cors import CORS
+from search import *
 from graph import MovieGraph
 
 # Creatign the data frame
@@ -20,8 +22,27 @@ df.drop(columns="Review Count", inplace=True)
 removed_num = 0
 removed_movies = []
 
-# Main function
+# Setting up flask
 
+app = Flask(__name__)
+CORS(app)
+
+graph = None
+
+def createGraph():
+    global graph
+
+    graph = MovieGraph(df)
+    return graph
+
+print("Creating graph... this might take awhile")
+createGraph()
+print("Graph created, server is now online")
+
+@app.route('/')
+def home():
+    return "Hello, World!"
+# Main function
 
 def main():
     # Creating the movie graph
@@ -99,11 +120,31 @@ def display_movie(movie_title):
 
     root.mainloop()
 
+@app.route('/search/<name>')
+def searchRoute(name):
+    movies = search(name)
+    return {
+        'movies': movies 
+    }
+    
+@app.route('/movies')
+def movies():
+    return {
+        'length': len(df)
+    }
 
-def search():
+@app.route('/movie/<name>')
+def movieInfo(name):
+    problem = Problem(name, graph, 10)
+    results = problem.do_searches(name)
+    return {
+        'results': results
+    }
+
+def search(search_term):
     movies_found = []
     while len(movies_found) < 1:
-        search_term = input("Please search for a movie: ")
+        # search_term = input("Please search for a movie: ")
         count = 0
 
         for movie in df.index:
@@ -113,23 +154,24 @@ def search():
                 movies_found.append(movie_title)
 
         movies_found.sort()
+        return movies_found
 
-        match len(movies_found):
-            case 0:
-                print("No movies found")
-            case 1:
-                print("One movie found!")
-                return movies_found[0]
-            case _:
-                print("Found more than one movie, please choose(1-" +
-                      str(len(movies_found)) + ")")
-                i = 1
-                for movie in movies_found:
-                    print(str(i) + ". " + movie)
-                    i += 1
+        # match len(movies_found):
+        #     case 0:
+        #         print("No movies found")
+        #     case 1:
+        #         print("One movie found!")
+        #         return movies_found[0]
+        #     case _:
+        #         print("Found more than one movie, please choose(1-" +
+        #               str(len(movies_found)) + ")")
+        #         i = 1
+        #         for movie in movies_found:
+        #             print(str(i) + ". " + movie)
+        #             i += 1
 
-                choice = int(input("\n"))
-                return movies_found[choice-1]
+        #         # choice = int(input("\n"))
+        #         return movies_found[choice-1]
 
 
-main()
+# main()
