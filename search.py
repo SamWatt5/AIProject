@@ -74,6 +74,27 @@ class Problem:
                 elif cost == 5:
                     results_list.append(self.result(action))
                     currMovie = action
+        return results_list
+
+    def combine_searches(list1, list2, list3):
+        combined_results = []
+        for movie in list1:
+            if (movie in list2) or (movie in list3):
+                combined_results.append(movie)
+        for movie in list2:
+            if movie in list3 and movie not in combined_results:
+                combined_results.append(movie)
+        return combined_results
+
+    def do_searches(self, startingMovie):
+        bfs_results = self.bfs(startingMovie)
+        dfs_results = self.dfs(startingMovie)
+        as_results = self.a_star(startingMovie)
+
+        combined_results = self.combine_searches(
+            bfs_results, dfs_results, as_results)
+
+        return combined_results
 
     def depthSearch(self, startingMovie):
         index = np.where(self.graph.movieTitles == startingMovie)[0][0]
