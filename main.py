@@ -34,7 +34,7 @@ def main():
 
     problem = Problem(starting_movie_title, graph, 10)
     print(problem.actions(starting_movie_title))
-
+    print(problem.depthSearch)
     # other_movie = search()
 
     # movie1 = df[df["Title"] == starting_movie]
