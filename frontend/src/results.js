@@ -31,29 +31,14 @@ export default function Results() {
 
   function MovieCard({ movie }) {
     return (
-      <div className="card w-80 bg-base-300 m-2">
-        <div className="card-body">
-          <img src={movie.Poster} alt={movie.Title} className="rounded-lg" />
-          <h1 className="card-title">{movie.Title}</h1>
-          <h2 className="card-title">Directed by:</h2>
-          <p className="card-normal">{movie.Director}</p>
-          <h2 className="card-subtitle">Cast:</h2>
-          <p className="card-normal">{movie.Cast}</p>
-          <h2 className="card-subtitle">Genres:</h2>
-          <p className="card-normal">{movie.Genre}</p>
-        </div>
-      </div>
-    );
-  }
-
-  function StartingMovieCard({ movie }) {
-    return (
-      <div className="card w-80 bg-base-300">
-        <div className="card-body">
-          <img src={movie.Poster} alt={movie.Title} className="rounded-lg" />
-          <div>
+      <div className="card w-96 bg-base-300 m-2">
+        <div className="card-body grid gap-4 grid-cols-3 grid-rows-1">
+          <div className="row-span-1 col-span-1">
+            <img src={movie.Poster} alt={movie.Title} className="rounded-lg " />
             <h1 className="card-title">{movie.Title}</h1>
-            <h2 className="card-title">Directed by:</h2>
+          </div>
+          <div className="columns-2 col-span-2">
+            <h2 className="card-subtitle">Directed by:</h2>
             <p className="card-normal">{movie.Director}</p>
             <h2 className="card-subtitle">Cast:</h2>
             <p className="card-normal">{movie.Cast}</p>
@@ -67,12 +52,15 @@ export default function Results() {
 
   return (
     <>
-      <div className="flex justify-between">
-        <div className="w-1/6">
-          <StartingMovieCard movie={startingMovie} />
+      <h1 className="text-3xl text-center">
+        Found {results.length} movies similar to {startingMovie.Title}...
+      </h1>
+      <div className="grid gap-4 grid-cols-3 grid-rows-2 text-center">
+        <div className="row-span-1 col-span-3 col-start-2">
+          <MovieCard movie={startingMovie} />
         </div>
-        <div className="w-4/6">
-          <div className="carousel carousel-center rounded-box w-3/6 bg-base-200">
+        <div className="row-span-1">
+          <div className="carousel carousel-center rounded-box w-screen bg-base-200">
             {results.map((movie, index) => (
               <div key={index} className="carousel-item">
                 <MovieCard movie={movie} />
