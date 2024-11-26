@@ -79,8 +79,7 @@ class MovieGraph:
 
         adj_matrix = total_costs
 
-        print(f"{self.movieTitles[0]} {
-              self.movieTitles[1]} {self.genre_costs[0][1]}  {self.director_costs[0][1]}  {self.cast_costs[0][1]} {adj_matrix[0][1]}")
+        print(f"{self.movieTitles[0]} {self.movieTitles[1]} {self.genre_costs[0][1]}  {self.director_costs[0][1]}  {self.cast_costs[0][1]} {adj_matrix[0][1]}")
         # MAYBE STORE THIS ALL TO A FILE SO DOESNT NEED TO RUN EVERY TIME!
 
         # OLD SLOW CODE (TAKES LIKE 30 MINS TO COMPLETE! :0 ):
