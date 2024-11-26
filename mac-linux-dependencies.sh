@@ -14,7 +14,6 @@ echo "Installing packages..."
 python3 -m pip install pandas pillow tk
 
 echo "Ensuring that SSL certificates are properly configured"
-
 python3 -m pip install certifi
 
 if [ $? -ne 0 ]; then
@@ -23,7 +22,5 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "All packages installed successfully!"
-
-python3 -m pip install certifi
 
 read -p "Press any key to continue..."

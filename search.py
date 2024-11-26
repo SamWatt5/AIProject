@@ -1,5 +1,9 @@
 import numpy as np
 from dataclasses import dataclass
+from collections import deque
+
+class Node:
+    pass
 
 
 class Problem:
@@ -21,6 +25,41 @@ class Problem:
         print(count)
         return actions_list
 
+    # Uniformed search
+    
+    # Using bfs to find 10 movies with clossness of less than 7 and store them in an array
+    def bfs(self, startingMovie):
+        results = []
+        queue = deque()
+        visited = set()
+
+        # Get the index of the starting movie
+        try:
+            startIndex = np.where(self.graph.movieTitles == startingMovie)[0][0]
+        except IndexError:
+            print("Starting movie not found in graph.")
+            return results
+        
+        # Initialisng the bfs queue with the starting movie
+        queue.append(startIndex)
+        visited.add(startIndex)
+
+        while queue and len(result) < 10:
+            curr = queue.popleft()
+
+            # Explore neighbors of the current movie
+            for neighbor in range(self.graph.numMovies):
+                closeness = self.graph.adjMatrix[curr][neighbor]
+                if neighbor not in visted and closeness != 0 and closeness <self.closeness:
+                    visited.add(neighbor)
+                    queue.append(neighbor)
+                    results.append(self.graph.movieTitles[neighbor])
+
+                    if len(results) == 10:
+                        break
+        return results
+
+    # Informed search 
     def a_star(self, startingMovie):
         results_list = []
         currMovie = startingMovie
