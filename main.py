@@ -33,7 +33,8 @@ def main():
     # starting_movie = df[df["Title"] == starting_movie_title]
 
     problem = Problem(starting_movie_title, graph, 10)
-    print(problem.actions(starting_movie_title))
+    # print(problem.actions(starting_movie_title))
+    print(problem.bfs(starting_movie_title))
 
     # other_movie = search()
 
