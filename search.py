@@ -44,13 +44,13 @@ class Problem:
         queue.append(startIndex)
         visited.add(startIndex)
 
-        while queue and len(result) < 10:
+        while queue and len(results) < 10:
             curr = queue.popleft()
 
             # Explore neighbors of the current movie
             for neighbor in range(self.graph.numMovies):
                 closeness = self.graph.adjMatrix[curr][neighbor]
-                if neighbor not in visted and closeness != 0 and closeness <self.closeness:
+                if neighbor not in visited and closeness != 0 and closeness <self.closeness:
                     visited.add(neighbor)
                     queue.append(neighbor)
                     results.append(self.graph.movieTitles[neighbor])
