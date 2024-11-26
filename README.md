@@ -4,11 +4,20 @@ We want to create a movie suggestion system. The user will input any movies they
 
 # Running The Program
 
-To be able to run the program for ther first time, please run
-`./win-dependencies`
-on windows or
-`mac-linux-dependencies`
-on mac
+### Prerequisites
+
+- Node.js and npm (for React)
+- Python and pip (for Flask)
+
+### Setting up backend:
+
+-run `./start.bat`
+
+### Setting up frontend:
+
+-run `npm start`
+
+- The program is now live at http://localhost:3000
 
 # The Problem
 
