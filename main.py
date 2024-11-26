@@ -1,4 +1,4 @@
-iEmmport pandas as pd
+import pandas as pd
 import sys
 from difflib import SequenceMatcher
 from PIL import ImageTk, Image
@@ -34,7 +34,7 @@ def main():
 
     problem = Problem(starting_movie_title, graph, 10)
     print(problem.actions(starting_movie_title))
-    print(problem.depthSearch)
+    print(problem.depthSearch(starting_movie_title))
     # other_movie = search()
 
     # movie1 = df[df["Title"] == starting_movie]

@@ -40,7 +40,7 @@ class Problem:
         #declare variables 
         index = np.where(self.graph.movieTitles == startingMovie)[0][0]
         stack = []
-        visited = []
+        visited = [False for _ in range(self.graph.numMovies)]
         allVisited = False
         top = -1
         i = 0
