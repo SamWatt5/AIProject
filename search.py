@@ -37,6 +37,7 @@ class Problem:
                     currMovie = action
 
     def depthSearch(self, startingMovie):
+        #declare variables 
         index = np.where(self.graph.movieTitles == startingMovie)[0][0]
         stack = []
         visited = []
@@ -44,15 +45,40 @@ class Problem:
         top = -1
         i = 0
         order = 0
+        superReleventMovies = []
+        releventMovies = []
 
+        #set the first/current movie to already being visited
         visited[index] = True
 
-        while(allVisited == False):
+        while(allVisited == False or len(releventMovies) < 10):
 
             for i in range(self.graph.numMovies):
-                i += 1
-                if self.graph.adjMatrix
+                if self.graph.adjMatrix[index][i] > 0 and visited[i] == False:
+                    #add to top of stack to allow backtracking
+                    top += 1
+                    stack[top] = index
 
+                    #change current index to the new indexed one
+                    index = i
+
+                    #update the current index node and say its been visited
+                    visited[index] = True
+
+                    #if the movie is closesly related add it to a list 
+                    if self.graph.adjMatrix[index][i] == 3:
+                        superReleventMovies.append(self.graph.movieTitles[index])
+                    elif self.graph.adjMatrix[index][i] == 5:
+                        releventMovies.append(self.graph.movieTitles[index])
+
+            if top >= 0:
+                index = stack[top]
+                top -= 1
+            else:
+                allVisited = True
+        
+        return releventMovies
+    
     def result(self, action):
         # do action on state and return new state, action is in actions_list in actions function
         # action is index in adjmatrix
