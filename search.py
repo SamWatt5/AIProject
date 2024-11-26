@@ -96,22 +96,22 @@ class Problem:
 
         return combined_results
 
-    def depthSearch(self, startingMovie):
-        index = np.where(self.graph.movieTitles == startingMovie)[0][0]
-        stack = []
-        visited = []
-        allVisited = False
-        top = -1
-        i = 0
-        order = 0
+    # def depthSearch(self, startingMovie):
+    #     index = np.where(self.graph.movieTitles == startingMovie)[0][0]
+    #     stack = []
+    #     visited = []
+    #     allVisited = False
+    #     top = -1
+    #     i = 0
+    #     order = 0
 
-        visited[index] = True
+    #     visited[index] = True
 
-        while(allVisited == False):
+    #     while(allVisited == False):
 
-            for i in range(self.graph.numMovies):
-                i += 1
-                if self.graph.adjMatrix
+    #         for i in range(self.graph.numMovies):
+    #             i += 1
+    #             if self.graph.adjMatrix
 
     def result(self, action):
         # do action on state and return new state, action is in actions_list in actions function
