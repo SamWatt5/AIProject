@@ -1,11 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
-import { Result } from "postcss";
-import { BrowserRouter, Route, Routes, Switch } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [movie, setMovie] = useState(null);
   const [movies, setMovies] = useState([]);
+  const navigate = useNavigate();
 
   function onChange(event) {
     setMovie(event.target.value);
@@ -24,6 +24,11 @@ function App() {
       });
 
     document.getElementById("moviesModal").showModal();
+  }
+
+  function goToResults(movie_title) {
+    console.log(movie_title);
+    navigate(`/result/${movie_title}`);
   }
 
   return (
@@ -52,10 +57,19 @@ function App() {
             <>
               {movies.map((movie, index) => (
                 <>
-                  <form method="dialog" className="p-3 bg-base-200 w-3/4 rounded m-2">
-                    <button className="btn mr-5 btn-secondary inline">{index + 1}</button>
-                    <p className="inline">{ movie }</p>  
-                  </form> 
+                  <form
+                    key={index}
+                    method="dialog"
+                    className="p-3 bg-base-200 w-3/4 rounded m-2"
+                  >
+                    <button
+                      className="btn mr-5 btn-secondary inline"
+                      onClick={() => goToResults(movie)}
+                    >
+                      {index + 1}
+                    </button>
+                    <p className="inline">{movie}</p>
+                  </form>
                 </>
               ))}
             </>

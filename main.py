@@ -63,12 +63,26 @@ def movies():
 
 
 @app.route('/movie/<name>')
+def movie(name):
+    movie = df[df["Title"] == name]
+    return {
+        "Title": name,
+        "Rating": movie["Rating"].iloc[0],
+        "Genre": movie["Genre"].iloc[0],
+        "Director": movie["Director"].iloc[0],
+        "Description": movie["Description"].iloc[0],
+        "Poster": movie["Poster"].iloc[0],
+        "Cast": movie["Cast"].iloc[0]
+    }
+
+
+@app.route('/result/<name>')
 def movieInfo(name):
     problem = Problem(name, graph, 10)
-    results = problem.do_searches(name)
+    search_results = problem.do_searches(name)
     results = {}
 
-    for movie_title in results:
+    for movie_title in search_results:
         movie = df[df["Title"] == movie_title]
         results[movie_title] = {
             "Title": movie_title,
@@ -76,9 +90,12 @@ def movieInfo(name):
             "Genre": movie["Genre"].iloc[0],
             "Director": movie["Director"].iloc[0],
             "Description": movie["Description"].iloc[0],
-            "Poster": movie["Poster"].iloc[0]
+            "Poster": movie["Poster"].iloc[0],
+            "Cast": movie["Cast"].iloc[0]
         }
-    return results
+    return {
+        'results': results
+    }
 
 
 def search(search_term):
