@@ -11,10 +11,13 @@ python3 -m pip install --upgrade pip
 python3 -m pip --version
 
 echo "Installing packages..."
-python3 -m pip install pandas pillow tk
+python3 -m pip install pandas pillow tk flask flask-cors
+
+echo "Ensuring flask-cors is properly installed"
+python3 -m pip install flask-cors
+python3 -m pip show flask-cors
 
 echo "Ensuring that SSL certificates are properly configured"
-
 python3 -m pip install certifi
 
 if [ $? -ne 0 ]; then
@@ -23,7 +26,4 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "All packages installed successfully!"
-
-python3 -m pip install certifi
-
 read -p "Press any key to continue..."
