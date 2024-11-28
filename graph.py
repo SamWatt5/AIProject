@@ -21,10 +21,6 @@ class MovieGraph:
             self.adjMatrix = self.create_adj_matrix()
             self.save_adj_matrix_to_file()
 
-        print(f"Number of movies: {self.numMovies}")
-
-        print("IM HERE")
-
     # Creates an adjancency matrix from a data set
     def create_adj_matrix(self):
         # creating numpy array of zeros

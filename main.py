@@ -1,10 +1,6 @@
 import pandas as pd
 import sys
 from difflib import SequenceMatcher
-from PIL import ImageTk, Image
-import tkinter as tk
-import urllib.request
-import io
 from flask import Flask
 from flask_cors import CORS
 from search import *
@@ -37,9 +33,10 @@ def createGraph():
     return graph
 
 
-print("Creating graph... this might take awhile")
-createGraph()
-print("Graph created, server is now online")
+if __name__ == "__main__":
+    print("Creating graph... this might take awhile")
+    createGraph()
+    print("Graph created, server is now online")
 
 
 @app.route('/')
