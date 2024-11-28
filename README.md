@@ -1,8 +1,14 @@
 # Movie Suggestion System
 
-We want to create a movie suggestion system. The user will input any movies they have recently watched, along with a score they give them. They will also be given the option to input what genres they like. Our goal will then be to develop an AI that will sort through a dataset of movies finding similar movies which the user would be interested in. We will achieve this by implementing three searching algorithms for this project, a breadth-first search, which will give more general suggestions, a depth-first search, giving recommendations very similar to each other, and a heuristic search, which will be most tailored to the user.
+This project aims to create a list of movie recommendations given a user's movie input. The user is asked to enter the title of a movie, which is then found in our dataset. The program will run 3 types of AI searches on the data, and find a final list of movies to give to the user.
 
 # Running The Program
+
+## CLI Version
+
+- TO BE IMPLEMENTED
+
+## Web Version
 
 ### Prerequisites
 
