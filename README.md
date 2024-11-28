@@ -4,13 +4,26 @@ This project aims to create a list of movie recommendations given a user's movie
 
 # Running The Program
 
+- Before running either version, please install
+
 ## CLI Version
 
-- TO BE IMPLEMENTED
+### Prerequisites:
+
+- python and pip
+
+## Installing python packages:
+
+- run `pip install -r requirements.txt` on windows
+- or run `python3 -m pip install -r requirements.txt` on mac
+
+### How to run:
+
+- run "CLI.py"
 
 ## Web Version
 
-### Prerequisites
+### Prerequisites:
 
 - Node.js and npm (for React)
 - Python and pip (for Flask)
