@@ -11,7 +11,7 @@ python3 -m pip install --upgrade pip
 python3 -m pip --version
 
 echo "Installing packages..."
-python3 -m pip install pandas pillow tk flask flask-cors
+python3 -m pip install pandas flask flask-cors
 
 echo "Ensuring flask-cors is properly installed"
 python3 -m pip install flask-cors
