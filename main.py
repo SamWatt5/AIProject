@@ -33,10 +33,9 @@ def createGraph():
     return graph
 
 
-if __name__ == "__main__":
-    print("Creating graph... this might take awhile")
-    createGraph()
-    print("Graph created, server is now online")
+print("Creating graph... this might take awhile")
+createGraph()
+print("Graph created, server is now online")
 
 
 @app.route('/')

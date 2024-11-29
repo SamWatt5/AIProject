@@ -2,7 +2,7 @@ import pandas as pd
 import sys
 from search import *
 from graph import MovieGraph
-from main import search
+from searchdf import search
 
 # Creatign the data frame
 sys.stdout.reconfigure(encoding='utf-8')
