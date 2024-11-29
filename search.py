@@ -1,6 +1,7 @@
 import numpy as np
 from dataclasses import dataclass
 from collections import deque
+import time
 
 class Node:
     pass
@@ -50,13 +51,21 @@ class Problem:
             # Explore neighbors of the current movie
             for neighbor in range(self.graph.numMovies):
                 closeness = self.graph.adjMatrix[curr][neighbor]
+                print("Comparing Movies")
+                print(self.graph.movieTitles[startIndex])
+                print(self.graph.movieTitles[neighbor])
+                print(results)
                 if neighbor not in visited and closeness != 0 and closeness <self.closeness:
+                    print("\033[32mMatch!\033[0m")
                     visited.add(neighbor)
                     queue.append(neighbor)
                     results.append(self.graph.movieTitles[neighbor])
 
                     if len(results) == 10:
                         break
+                else: 
+                    print("\033[31mNo match!\033[0m")
+                time.sleep(0.02)
         return results
 
     # Informed search 
