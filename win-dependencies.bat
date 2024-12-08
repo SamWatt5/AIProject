@@ -17,5 +17,8 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
+cd frontend
+npm install
+
 echo "All packages installed successfully!"
 pause

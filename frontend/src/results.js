@@ -29,9 +29,9 @@ export default function Results() {
       });
   }, [movie_title]);
 
-  function MovieCard({ movie }) {
+  function MovieCard({ movie, index }) {
     return (
-      <div className="card w-96 bg-base-300 m-2">
+      <div className="card w-96 bg-base-300 m-2" id={`slide${index}`}>
         <div className="card-body grid gap-4 grid-cols-3 grid-rows-1">
           <div className="row-span-1 col-span-1">
             <img src={movie.Poster} alt={movie.Title} className="rounded-lg " />
@@ -50,8 +50,42 @@ export default function Results() {
     );
   }
 
+  let pos = { top: 0, left: 0, x: 0, y: 0 };
+  const ele = document.getElementById("container");
+
+  function mouseDownHandler(e) {
+    ele.style.cursor = "grabbing";
+    ele.style.userSelect = "none";
+
+    pos = {
+      left: ele.scrollLeft,
+      top: ele.scrollTop,
+      x: e.clientX,
+      y: e.clientY,
+    };
+
+    document.addEventListener("mousemove", mouseMoveHandler);
+    document.addEventListener("mouseup", mouseUpHandler);
+  }
+
+  function mouseMoveHandler(e) {
+    const dx = e.clientX - pos.x;
+    const dy = e.clientY - pos.y;
+    ele.scrollTop = pos.top - dy;
+    ele.scrollLeft = pos.left - dx;
+  }
+
+  function mouseUpHandler(e) {
+    ele.style.cursor = 'grab';
+    ele.style.removeProperty('user-select');
+
+    document.removeEventListener('mousemove', mouseMoveHandler);
+    document.removeEventListener('mouseup', mouseUpHandler);
+  }
+
   return (
     <>
+      
       <h1 className="text-3xl text-center">
         Found {results.length} movies similar to {startingMovie.Title}...
       </h1>
@@ -60,9 +94,9 @@ export default function Results() {
           <MovieCard movie={startingMovie} />
         </div>
         <div className="row-span-1">
-          <div className="carousel carousel-center rounded-box w-screen bg-base-200">
+          <div id="container" onMouseDown={mouseDownHandler} className="inline-flex w-screen bg-base-200 overflow-scroll" style={{ scrollbar: "hidden"}}>
             {results.map((movie, index) => (
-              <div key={index} className="carousel-item">
+              <div key={index} className="flex">
                 <MovieCard movie={movie} />
               </div>
             ))}

@@ -58,6 +58,37 @@ class Problem:
                     if len(results) == 10:
                         break
         return results
+    
+    def dfs(self, startingMovie):
+        results = []
+        stack = []
+        visited = set()
+
+        # Get the index of the starting movie
+        try:
+            startIndex = np.where(self.graph.movieTitles == startingMovie)[0][0]
+        except IndexError:
+            print("Starting movie not found in graph.")
+            return results
+
+        # Initialisng the dfs stack with the starting movie
+        stack.append(startIndex)
+        visited.add(startIndex)
+
+        while stack and len(results) < 10:
+            curr = stack.pop()
+
+            # Explore neighbors of the current movie
+            for neighbor in range(self.graph.numMovies):
+                closeness = self.graph.adjMatrix[curr][neighbor]
+                if neighbor not in visited and closeness != 0 and closeness < self.closeness:
+                    visited.add(neighbor)
+                    stack.append(neighbor)
+                    results.append(self.graph.movieTitles[neighbor])
+
+                    if len(results) == 10:
+                        break
+        return results
 
     # Informed search 
     def a_star(self, startingMovie):
@@ -87,13 +118,13 @@ class Problem:
         return combined_results
 
     def do_searches(self, startingMovie):
-        bfs_results = self.bfs(startingMovie)
-        # dfs_results = self.dfs(startingMovie)
+        # bfs_results = self.bfs(startingMovie)
+        dfs_results = self.dfs(startingMovie)
         # as_results = self.a_star(startingMovie)
 
         # combined_results = self.combine_searches(
             # bfs_results)
-        return bfs_results
+        return dfs_results
 
     # def depthSearch(self, startingMovie):
     #     index = np.where(self.graph.movieTitles == startingMovie)[0][0]
