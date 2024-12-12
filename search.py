@@ -1,6 +1,8 @@
 import numpy as np
+import math
 from dataclasses import dataclass
 from collections import deque
+
 
 class Node:
     pass
@@ -26,7 +28,7 @@ class Problem:
         return actions_list
 
     # Uniformed search
-    
+
     # Using bfs to find 10 movies with clossness of less than 7 and store them in an array
     def bfs(self, startingMovie):
         results = []
@@ -35,11 +37,12 @@ class Problem:
 
         # Get the index of the starting movie
         try:
-            startIndex = np.where(self.graph.movieTitles == startingMovie)[0][0]
+            startIndex = np.where(
+                self.graph.movieTitles == startingMovie)[0][0]
         except IndexError:
             print("Starting movie not found in graph.")
             return results
-        
+
         # Initialisng the bfs queue with the starting movie
         queue.append(startIndex)
         visited.add(startIndex)
@@ -50,7 +53,7 @@ class Problem:
             # Explore neighbors of the current movie
             for neighbor in range(self.graph.numMovies):
                 closeness = self.graph.adjMatrix[curr][neighbor]
-                if neighbor not in visited and closeness != 0 and closeness <self.closeness:
+                if neighbor not in visited and closeness != 0 and closeness < self.closeness:
                     visited.add(neighbor)
                     queue.append(neighbor)
                     results.append(self.graph.movieTitles[neighbor])
@@ -58,7 +61,25 @@ class Problem:
                     if len(results) == 10:
                         break
         return results
-    
+
+    def dfsRecursive(self, startingMovie, stack, visited, results):
+        if len(results) == 10:
+            return
+        curr = stack.pop()
+        results.append(self.graph.movieTitles[curr])
+        all_neighbors = []
+        for neighbor in range(self.graph.numMovies):
+            closeness = self.graph.adjMatrix[curr][neighbor]
+        
+        all_neighbors = all_neighbors.sort()
+        for i in range(10):
+            if neighbor not in visited and closeness != 0 and closeness < self.closeness:
+                visited.add(all_neighbors[i])
+                stack.append(all_neighbors[i])
+                self.dfsRecursive(all_neighbors[i], stack, visited, results)
+        
+            
+
     def dfs(self, startingMovie):
         results = []
         stack = []
@@ -66,7 +87,8 @@ class Problem:
 
         # Get the index of the starting movie
         try:
-            startIndex = np.where(self.graph.movieTitles == startingMovie)[0][0]
+            startIndex = np.where(
+                self.graph.movieTitles == startingMovie)[0][0]
         except IndexError:
             print("Starting movie not found in graph.")
             return results
@@ -75,22 +97,11 @@ class Problem:
         stack.append(startIndex)
         visited.add(startIndex)
 
-        while stack and len(results) < 10:
-            curr = stack.pop()
-
-            # Explore neighbors of the current movie
-            for neighbor in range(self.graph.numMovies):
-                closeness = self.graph.adjMatrix[curr][neighbor]
-                if neighbor not in visited and closeness != 0 and closeness < self.closeness:
-                    visited.add(neighbor)
-                    stack.append(neighbor)
-                    results.append(self.graph.movieTitles[neighbor])
-
-                    if len(results) == 10:
-                        break
+        self.dfsRecursive(startIndex, stack, visited, results)
         return results
 
-    # Informed search 
+    # Informed search
+
     def a_star(self, startingMovie):
         results_list = []
         currMovie = startingMovie
@@ -107,7 +118,7 @@ class Problem:
                     currMovie = action
         return results_list
 
-    def combine_searches(list1, list2, list3):
+    def combine_searches(self, list1, list2, list3):
         combined_results = []
         for movie in list1:
             if (movie in list2) or (movie in list3):
@@ -115,16 +126,14 @@ class Problem:
         for movie in list2:
             if movie in list3 and movie not in combined_results:
                 combined_results.append(movie)
-        return combined_results
 
     def do_searches(self, startingMovie):
-        # bfs_results = self.bfs(startingMovie)
+        bfs_results = self.bfs(startingMovie)
         dfs_results = self.dfs(startingMovie)
         # as_results = self.a_star(startingMovie)
 
-        # combined_results = self.combine_searches(
-            # bfs_results)
-        return dfs_results
+        combined_results = self.combine_searches(bfs_results, dfs_results, [])
+        return combined_results
 
     # def depthSearch(self, startingMovie):
     #     index = np.where(self.graph.movieTitles == startingMovie)[0][0]
