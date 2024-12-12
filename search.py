@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import random
 from dataclasses import dataclass
 from collections import deque
 
@@ -62,27 +63,29 @@ class Problem:
                         break
         return results
 
-    def dfsRecursive(self, startingMovie, stack, visited, results):
+    def dfsRecursive(self, curr, visited, results, isFirstMovie=False):
         if len(results) == 10:
             return
-        curr = stack.pop()
-        results.append(self.graph.movieTitles[curr])
-        all_neighbors = []
+        visited.add(curr)
+        if not isFirstMovie:
+            results.append(self.graph.movieTitles[curr])
+        
+        closest_neighbor = None
+        closest_closeness = math.inf
         for neighbor in range(self.graph.numMovies):
             closeness = self.graph.adjMatrix[curr][neighbor]
+            if closeness != 0 and neighbor not in visited and closeness < closest_closeness:
+                closest_closeness = closeness
+                closest_neighbor = neighbor
         
-        all_neighbors = all_neighbors.sort()
-        for i in range(10):
-            if neighbor not in visited and closeness != 0 and closeness < self.closeness:
-                visited.add(all_neighbors[i])
-                stack.append(all_neighbors[i])
-                self.dfsRecursive(all_neighbors[i], stack, visited, results)
+        if closest_neighbor is not None:
+            # print(self.graph.movieTitles[curr],self.graph.movieTitles[closest_neighbor])
+            self.dfsRecursive(closest_neighbor, visited, results)
         
             
 
     def dfs(self, startingMovie):
         results = []
-        stack = []
         visited = set()
 
         # Get the index of the starting movie
@@ -94,10 +97,9 @@ class Problem:
             return results
 
         # Initialisng the dfs stack with the starting movie
-        stack.append(startIndex)
         visited.add(startIndex)
 
-        self.dfsRecursive(startIndex, stack, visited, results)
+        self.dfsRecursive(startIndex, visited, results, True)
         return results
 
     # Informed search
@@ -120,12 +122,23 @@ class Problem:
 
     def combine_searches(self, list1, list2, list3):
         combined_results = []
+        # for movie in list1:
+        #     if (movie in list2) or (movie in list3):
+        #         combined_results.append(movie)
+        # for movie in list2:
+        #     if movie in list3 and movie not in combined_results:
+        #         combined_results.append(movie)
         for movie in list1:
-            if (movie in list2) or (movie in list3):
-                combined_results.append(movie)
+            combined_results.append(movie)
         for movie in list2:
-            if movie in list3 and movie not in combined_results:
+            if movie not in combined_results:
                 combined_results.append(movie)
+        for movie in list3:
+            if movie not in combined_results:
+                combined_results.append(movie)
+
+        random.shuffle(combined_results)
+        return combined_results
 
     def do_searches(self, startingMovie):
         bfs_results = self.bfs(startingMovie)
@@ -134,23 +147,6 @@ class Problem:
 
         combined_results = self.combine_searches(bfs_results, dfs_results, [])
         return combined_results
-
-    # def depthSearch(self, startingMovie):
-    #     index = np.where(self.graph.movieTitles == startingMovie)[0][0]
-    #     stack = []
-    #     visited = []
-    #     allVisited = False
-    #     top = -1
-    #     i = 0
-    #     order = 0
-
-    #     visited[index] = True
-
-    #     while(allVisited == False):
-
-    #         for i in range(self.graph.numMovies):
-    #             i += 1
-    #             if self.graph.adjMatrix
 
     def result(self, action):
         # do action on state and return new state, action is in actions_list in actions function
