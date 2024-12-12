@@ -7,6 +7,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 df = pd.read_csv(
     "imdb-movies-dataset.csv", encoding="utf-8", encoding_errors="replace")
 
+
 df.drop_duplicates(inplace=True)
 df.dropna(inplace=True)
 df.drop(columns="Review Count", inplace=True)
