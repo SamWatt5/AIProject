@@ -75,11 +75,12 @@ class Problem:
         for neighbor in range(self.graph.numMovies):
             closeness = self.graph.adjMatrix[curr][neighbor]
             if closeness != 0 and neighbor not in visited and closeness < closest_closeness:
+                print(closeness, closest_closeness)
                 closest_closeness = closeness
                 closest_neighbor = neighbor
         
         if closest_neighbor is not None:
-            # print(self.graph.movieTitles[curr],self.graph.movieTitles[closest_neighbor])
+            # print(self.graph.movieTitles[curr],self.graph.movieTitles[closest_neighbor], self.graph.adjMatrix[curr][closest_neighbor])
             self.dfsRecursive(closest_neighbor, visited, results)
         
             
@@ -137,7 +138,7 @@ class Problem:
             if movie not in combined_results:
                 combined_results.append(movie)
 
-        random.shuffle(combined_results)
+        # random.shuffle(combined_results)
         return combined_results
 
     def do_searches(self, startingMovie):
