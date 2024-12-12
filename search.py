@@ -63,7 +63,7 @@ class Problem:
                         break
         return results
 
-    def dfsRecursive(self, curr, visited, results, isFirstMovie=False):
+    def greedyBestRecursive(self, curr, visited, results, isFirstMovie=False):
         if len(results) == 10:
             return
         visited.add(curr)
@@ -81,8 +81,39 @@ class Problem:
         
         if closest_neighbor is not None:
             # print(self.graph.movieTitles[curr],self.graph.movieTitles[closest_neighbor], self.graph.adjMatrix[curr][closest_neighbor])
-            self.dfsRecursive(closest_neighbor, visited, results)
+            self.greedyBestRecursive(closest_neighbor, visited, results)
         
+            
+
+    def greedyBest(self, startingMovie):
+        results = []
+        visited = set()
+
+        # Get the index of the starting movie
+        try:
+            startIndex = np.where(
+                self.graph.movieTitles == startingMovie)[0][0]
+        except IndexError:
+            print("Starting movie not found in graph.")
+            return results
+
+        # Initialisng the dfs stack with the starting movie
+        visited.add(startIndex)
+
+        self.greedyBestRecursive(startIndex, visited, results, True)
+        return results
+    
+    def dfsRecursive(self, curr, visited, results, isFirstMovie=False):
+        if len(results) == 10:
+            return
+        visited.add(curr)
+        if not isFirstMovie:
+            results.append(self.graph.movieTitles[curr])
+    
+        
+        for neighbor in range(self.graph.numMovies):
+            if self.graph.adjMatrix[curr][neighbor] != 0 and neighbor not in visited:
+                self.dfsRecursive(neighbor, visited, results)
             
 
     def dfs(self, startingMovie):
@@ -144,9 +175,9 @@ class Problem:
     def do_searches(self, startingMovie):
         bfs_results = self.bfs(startingMovie)
         dfs_results = self.dfs(startingMovie)
-        # as_results = self.a_star(startingMovie)
+        greedy_best_results = self.greedyBest(startingMovie)
 
-        combined_results = self.combine_searches(bfs_results, dfs_results, [])
+        combined_results = self.combine_searches(bfs_results, dfs_results, greedy_best_results)
         return combined_results
 
     def result(self, action):
@@ -176,6 +207,7 @@ class Node:
         self.parent = parent
         self.action = action
         self.path_cost = path_cost
+        self.heuristic = 0
         self.depth = 0
         if parent:
             self.depth = parent.depth + 1
