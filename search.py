@@ -75,7 +75,7 @@ class Problem:
         for neighbor in range(self.graph.numMovies):
             closeness = self.graph.adjMatrix[curr][neighbor]
             if closeness != 0 and neighbor not in visited and closeness < closest_closeness:
-                print(closeness, closest_closeness)
+                # print(closeness, closest_closeness)
                 closest_closeness = closeness
                 closest_neighbor = neighbor
 
