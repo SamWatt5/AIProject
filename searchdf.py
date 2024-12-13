@@ -2,11 +2,12 @@ import pandas as pd
 import sys
 from difflib import SequenceMatcher
 
+
+# Creating the data frame
 sys.stdout.reconfigure(encoding='utf-8')
 
 df = pd.read_csv(
     "imdb-movies-dataset.csv", encoding="utf-8", encoding_errors="replace")
-
 
 df.drop_duplicates(inplace=True)
 df.dropna(inplace=True)
@@ -15,6 +16,7 @@ removed_num = 0
 removed_movies = []
 
 
+# Search function by title, returns list of found movies
 def search(search_term):
     movies_found = []
     while len(movies_found) < 1:

@@ -4,7 +4,7 @@ from search import *
 from graph import MovieGraph
 from searchdf import search
 
-# Creatign the data frame
+# Creating the data frame
 sys.stdout.reconfigure(encoding='utf-8')
 
 df = pd.read_csv(
@@ -17,11 +17,13 @@ removed_num = 0
 removed_movies = []
 
 
+# Asks the user for a movie name
 def get_movie_name():
     movie_name = input("Enter a movie name: ")
     return movie_name
 
 
+# options after first run
 def menu():
     choice = 0
     while True:
@@ -33,6 +35,8 @@ def menu():
             break
 
 
+# runs search from searchdf.py
+# displays options if theres more than 1 movie found
 def cli_search(movie_title):
     movies_found = search(movie_title)
 
@@ -54,6 +58,7 @@ def cli_search(movie_title):
     return movies_found[choice-1]
 
 
+# prints movie information
 def print_movie(movie_title):
     movie = df[df["Title"] == movie_title]
 
@@ -64,6 +69,7 @@ def print_movie(movie_title):
     print(f"Description: {movie["Description"].iloc[0]}\n")
 
 
+# Creates Problem object and runs searches
 def start(movie_title):
     starting_movie = cli_search(movie_title)
     print_movie(starting_movie)
@@ -76,6 +82,7 @@ def start(movie_title):
         print_movie(movie)
 
 
+# Main function, loads movies and starts the program
 if __name__ == '__main__':
     print("Loading Movies... this might take awhile")
     graph = MovieGraph(df)

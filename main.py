@@ -6,7 +6,7 @@ from flask_cors import CORS
 from search import *
 from graph import MovieGraph
 
-# Creatign the data frame
+# Creating the data frame
 sys.stdout.reconfigure(encoding='utf-8')
 
 df = pd.read_csv(
@@ -18,14 +18,15 @@ df.drop(columns="Review Count", inplace=True)
 removed_num = 0
 removed_movies = []
 
-# Setting up flask
 
+# Setting up flask
 app = Flask(__name__)
 CORS(app)
 
 graph = None
 
 
+# Creates the graph
 def createGraph():
     global graph
 
@@ -38,11 +39,15 @@ createGraph()
 print("Graph created, server is now online")
 
 
+# Routes for the API
+
+# Home route
 @app.route('/')
 def home():
     return "Hello, World!"
 
 
+# When searching for title, this route is used
 @app.route('/search/<name>')
 def searchRoute(name):
     movies = search(name)
@@ -51,6 +56,8 @@ def searchRoute(name):
     }
 
 
+# Route for getting all movies
+# It actually just gets total number of movies
 @app.route('/movies')
 def movies():
     return {
@@ -58,6 +65,7 @@ def movies():
     }
 
 
+# Route for getting a specific movie
 @app.route('/movie/<name>')
 def movie(name):
     movie = df[df["Title"] == name]
@@ -72,6 +80,7 @@ def movie(name):
     }
 
 
+# Route for getting the result of a search
 @app.route('/result/<name>')
 def movieInfo(name):
     problem = Problem(name, graph, 10)
@@ -94,6 +103,8 @@ def movieInfo(name):
     }
 
 
+# Search algorithm
+# Same as the one in searchdf.py
 def search(search_term):
     movies_found = []
     while len(movies_found) < 1:

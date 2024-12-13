@@ -1,20 +1,17 @@
 import numpy as np
 import math
-import random
-from dataclasses import dataclass
 from collections import deque
 
 
-class Node:
-    pass
-
-
+# Class for defining the problem
 class Problem:
+    # definition of initial state
     def __init__(self, startingMovie, graph, closeness):
         self.startingMovie = startingMovie
         self.graph = graph
         self.closeness = closeness
 
+    # definition of actions
     def actions(self, movie):
         index = np.where(self.graph.movieTitles == movie)[0][0]
         print(index)
@@ -63,6 +60,7 @@ class Problem:
                         break
         return results
 
+    # method to make greedy search recursive
     def greedyBestRecursive(self, curr, visited, results, isFirstMovie=False):
         if len(results) == 10:
             return
@@ -75,14 +73,13 @@ class Problem:
         for neighbor in range(self.graph.numMovies):
             closeness = self.graph.adjMatrix[curr][neighbor]
             if closeness != 0 and neighbor not in visited and closeness < closest_closeness:
-                # print(closeness, closest_closeness)
                 closest_closeness = closeness
                 closest_neighbor = neighbor
 
         if closest_neighbor is not None:
-            # print(self.graph.movieTitles[curr],self.graph.movieTitles[closest_neighbor], self.graph.adjMatrix[curr][closest_neighbor])
             self.greedyBestRecursive(closest_neighbor, visited, results)
 
+    # method to start greedy best first search
     def greedyBest(self, startingMovie):
         results = []
         visited = set()
@@ -101,6 +98,7 @@ class Problem:
         self.greedyBestRecursive(startIndex, visited, results, True)
         return results
 
+    # method to make the dfs recursive
     def dfsRecursive(self, curr, visited, results, isFirstMovie=False):
         if len(results) == 10:
             return
@@ -112,6 +110,7 @@ class Problem:
             if self.graph.adjMatrix[curr][neighbor] != 0 and neighbor not in visited:
                 self.dfsRecursive(neighbor, visited, results)
 
+    # method for dfs
     def dfs(self, startingMovie):
         results = []
         visited = set()
@@ -130,32 +129,9 @@ class Problem:
         self.dfsRecursive(startIndex, visited, results, True)
         return results
 
-    # Informed search
-
-    def a_star(self, startingMovie):
-        results_list = []
-        currMovie = startingMovie
-        table = [Table_entry(False, 0, 0) for _ in range(self.graph.numMovies)]
-        while len(results_list) < 10:
-            actions = actions(currMovie)
-            for action in actions:
-                cost = self.graph.adjMatrix[currMovie][action]
-                if cost == 3:
-                    results_list.append(self.result(action))
-                    currMovie = action
-                elif cost == 5:
-                    results_list.append(self.result(action))
-                    currMovie = action
-        return results_list
-
+    # Combines the result of all three searches
     def combine_searches(self, list1, list2, list3):
         combined_results = []
-        # for movie in list1:
-        #     if (movie in list2) or (movie in list3):
-        #         combined_results.append(movie)
-        # for movie in list2:
-        #     if movie in list3 and movie not in combined_results:
-        #         combined_results.append(movie)
         for movie in list1:
             combined_results.append(movie)
         for movie in list2:
@@ -165,9 +141,9 @@ class Problem:
             if movie not in combined_results:
                 combined_results.append(movie)
 
-        # random.shuffle(combined_results)
         return combined_results
 
+    # This does the searches and returns the result
     def do_searches(self, startingMovie):
         bfs_results = self.bfs(startingMovie)
         dfs_results = self.dfs(startingMovie)
@@ -176,69 +152,3 @@ class Problem:
         combined_results = self.combine_searches(
             bfs_results, dfs_results, greedy_best_results)
         return combined_results
-
-    def result(self, action):
-        # do action on state and return new state, action is in actions_list in actions function
-        # action is index in adjmatrix
-        new_movie = self.graph.movieTitles[action]
-        return new_movie
-
-    def goal_test(self, movie):
-        return state == self.goalState
-
-    def path_cost(self, cost, state1, action, state2):
-        # return cost of a solution path that arrives at state2 from state1 via action, default cost = 1,
-        return cost+1
-
-
-@dataclass
-class Table_entry:
-    visited: bool
-    pathCost: int
-    predecessor: int
-
-
-class Node:
-    def __init__(self, state, parent=None, action=None, path_cost=0):
-        self.state = state
-        self.parent = parent
-        self.action = action
-        self.path_cost = path_cost
-        self.heuristic = 0
-        self.depth = 0
-        if parent:
-            self.depth = parent.depth + 1
-
-    def child_node(self, problem, action):
-        next_state = problem.result(self.state, action)
-        next_node = Node(next_state, self, action, problem.path_cost(
-            self.path_cost, self.state, action, next_state))
-        return next_node
-
-    def expand(self, problem, action):
-        # get list of all possible states from this state
-        children = []
-        for action in problem.actions(self.state):
-            children.append(self.child_node(problem, action))
-        return children
-
-    def path(self):
-        # find a path of nodes to this node
-        node = self
-        path = []
-        while node:
-            path.append(node)
-            node = node.parent
-        return list(reversed(path))
-
-    def solution(self):
-        # return every action in the path
-        actions = []
-        for node in self.path()[1:]:
-            actions.append(node.action)
-        return actions
-
-
-class Frontier:
-    def __init__(self):
-        pass

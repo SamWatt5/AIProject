@@ -1,3 +1,6 @@
+# This file is used to test the functionality of the functions in the main file
+# It calculates all combinations for the similarities of the movies
+
 def sum_combinations_with_sources(list1, list2, list3):
     result = []
     for i, a in enumerate(list1):

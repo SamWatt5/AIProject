@@ -1,15 +1,18 @@
 import pandas as pd
 import numpy as np
 
+# Class for the movie graph
+
 
 class MovieGraph:
-
+    # Constructor
     def __init__(self, df):
         self.df = df
         self.numMovies = len(df)
         self.movieTitles = np.array(
             [self.df.loc[movie, "Title"] for movie in self.df.index])
 
+        # Tries to load from file adj_matrix.txt, if not found, creates a new one
         try:
             self.adjMatrix = []
             with open("adj_matrix.txt", "r") as f:
@@ -52,16 +55,12 @@ class MovieGraph:
         print("cast done")
         # self.save_intermediary_to_file("cast.txt", self.cast_costs)
 
-        # self.rating_costs = np.array([[self.rating_path_cost(ratings[i], ratings[j]) for j in range(
-        # self.numMovies)] for i in range(self.numMovies)])
         print("ratings done")
         # self.save_intermediary_to_file("ratings.txt", self.rating_costs)
 
         # calculates total costs
-        #  - MAY CHANGE THIS TO NOT USE TOTAL AND STORE ARRAY AT EACH NODE INSTEAD
         total_costs = self.genre_costs + self.director_costs + \
             self.cast_costs
-        # THIS BIT ISNT WORKING RIGHT
         # if costs are the max for all criteria, don't count, and instead just use zero
         max_genre_cost = 5
         max_director_cost = 3
@@ -77,7 +76,6 @@ class MovieGraph:
 
         print(f"{self.movieTitles[0]} {
               self.movieTitles[1]} {self.genre_costs[0][1]}  {self.director_costs[0][1]}  {self.cast_costs[0][1]} {adj_matrix[0][1]}")
-        # MAYBE STORE THIS ALL TO A FILE SO DOESNT NEED TO RUN EVERY TIME!
 
         # OLD SLOW CODE (TAKES LIKE 30 MINS TO COMPLETE! :0 ):
         #
